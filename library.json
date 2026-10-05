@@ -1,20 +1,8 @@
 [
   {
-    "name": "Harry ",
-    "writer": "Rolling",
-    "publisher": "N\u00e3o sei",
+    "name": "aaa",
+    "writer": "bbb",
+    "publisher": "ccc",
     "pages": 200
-  },
-  {
-    "name": "Harry Potter",
-    "writer": "J.K. Rolling",
-    "publisher": "N\u00e3o sei",
-    "pages": 200
-  },
-  {
-    "name": "Percy Jackson",
-    "writer": "Rick Riordan",
-    "publisher": "N\u00e3o sei",
-    "pages": 150
   }
 ]

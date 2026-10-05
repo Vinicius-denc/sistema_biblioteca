@@ -4,6 +4,8 @@ from pathlib import Path
 
 FILE_JSON_PATH = Path(__file__).parent / 'library.json'
 
+
+
 class Books():
     def __init__(self, name, writer, publisher, pages):
         self.name = name
@@ -24,12 +26,14 @@ def load_bookcase(path, Books):
     return bookcase
 
 
+
 def save_books(bookcase):
 
     formated_books = obj_to_dict(bookcase)
 
     with open(FILE_JSON_PATH, 'w', encoding='utf8') as file:
         json.dump(formated_books, file, indent=2)
+
 
 
 def obj_to_dict(bookcase):
@@ -39,19 +43,32 @@ def obj_to_dict(bookcase):
     return formated_as_dict
 
 
+def add_book():
+    create_a_book = {
+        'name': 'name',
+        'writer': 'writer',
+        'publisher': 'publisher',
+        'pages': 'pages'
+    }
+    create_a_book['name'] = input('Nome do livro:')
+    create_a_book['writer'] = input('Autor(a):')
+    create_a_book['publisher'] = input('Editora:')
+    create_a_book['pages'] = int(input('Número de páginas:'))
+
+    book_created = Books(**create_a_book)
+    return book_created
+
+
+
+
+
+
+
 bookcase = []
 
 
-book_3 = Books('Harry ', 'Rolling', 'Não sei', 200)
-bookcase.append(book_3)
-save_books(bookcase)
-
-book_1 = Books('Harry Potter', 'J.K. Rolling', 'Não sei', 200)
+book_1 = add_book()
 bookcase.append(book_1)
-save_books(bookcase)
-
-book_2 = Books('Percy Jackson', 'Rick Riordan', 'Não sei', 150)
-bookcase.append(book_2)
 save_books(bookcase)
 
 
@@ -61,6 +78,7 @@ bookcase = load_bookcase(FILE_JSON_PATH, Books)
 
 for book in bookcase:
     print(book.name)
+    
 
 
 
