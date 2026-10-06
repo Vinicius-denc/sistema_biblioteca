@@ -1,8 +1,14 @@
 [
   {
     "name": "aaa",
+    "writer": "aaa",
+    "publisher": "aaa",
+    "pages": 200
+  },
+  {
+    "name": "aaa",
     "writer": "bbb",
     "publisher": "ccc",
-    "pages": 200
+    "pages": 300
   }
 ]

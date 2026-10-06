@@ -23,7 +23,7 @@ def load_bookcase(path, Books):
     for book in book_files:
         bookcase.append(Books(**book))
 
-    return bookcase
+    return bookcase #lista de objetos
 
 
 
@@ -40,7 +40,7 @@ def obj_to_dict(bookcase):
     formated_as_dict = []
     for book_obj in bookcase:
         formated_as_dict.append(vars(book_obj))
-    return formated_as_dict
+    return formated_as_dict #lista de dicionarios
 
 
 def add_book():
@@ -56,9 +56,7 @@ def add_book():
     create_a_book['pages'] = int(input('Número de páginas:'))
 
     book_created = Books(**create_a_book)
-    return book_created
-
-
+    return book_created #retorna um objeto de livro
 
 
 
@@ -66,18 +64,35 @@ def add_book():
 
 bookcase = []
 
+while True:
+    
 
-book_1 = add_book()
-bookcase.append(book_1)
-save_books(bookcase)
+    menu_choice = input('Digite uma ação:')
+
+    commands = {
+        'cadastrar': lambda: bookcase.append(add_book()), #retorna um objeto e salva na lista
+        'salvar': lambda: save_books(bookcase), #recebe uma lista de objetos e adiciona no json
+        'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books) #retorna lista de objetos
+    }
+
+    result = commands.get(menu_choice)()
+    print(bookcase)
+
+    if result is not None:
+        bookcase = result
+
+
+    # book_1 = add_book()
+    # bookcase.append(book_1)
+    # save_books(bookcase)
 
 
 
-bookcase = load_bookcase(FILE_JSON_PATH, Books)
+    # bookcase = load_bookcase(FILE_JSON_PATH, Books)
 
 
-for book in bookcase:
-    print(book.name)
+    # for book in bookcase:
+    #     print(book.name)
     
 
 
