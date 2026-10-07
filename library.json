@@ -3,6 +3,12 @@
     "name": "aaa",
     "writer": "aaa",
     "publisher": "aaa",
+    "pages": 100
+  },
+  {
+    "name": "bbb",
+    "writer": "bbb",
+    "publisher": "bbb",
     "pages": 200
   },
   {

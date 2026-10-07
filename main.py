@@ -59,10 +59,20 @@ def add_book():
     return book_created #retorna um objeto de livro
 
 
+def show_saved_books(bookcase):
+    books = obj_to_dict(bookcase)
+    for index, book in enumerate(books, start= 1):
+        print(f"{index} - {book['name']}")
+        print(f"Autor: {book['writer']}")
+        print(f"Editora: {book['publisher']}")
+        print(f"Páginas: {book['pages']}")
+        print()
+    
 
 
 
-bookcase = []
+
+bookcase = load_bookcase(FILE_JSON_PATH, Books)
 
 while True:
     
@@ -72,11 +82,12 @@ while True:
     commands = {
         'cadastrar': lambda: bookcase.append(add_book()), #retorna um objeto e salva na lista
         'salvar': lambda: save_books(bookcase), #recebe uma lista de objetos e adiciona no json
-        'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books) #retorna lista de objetos
+        'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books), #retorna lista de objetos
+        'exibir': lambda: show_saved_books(bookcase) #imprime os livros cadastrados
     }
 
     result = commands.get(menu_choice)()
-    print(bookcase)
+
 
     if result is not None:
         bookcase = result
