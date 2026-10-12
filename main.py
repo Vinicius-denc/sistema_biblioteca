@@ -69,10 +69,27 @@ def show_saved_books(bookcase):
         print()
     
 
+def del_book(bookcase):
+    if bookcase:
+        try:
+            book_to_delete = int(input('Digite o indice do livro a ser deletado: '))
+            if book_to_delete <= 0 or book_to_delete > len(bookcase):
+                print('Indice não encontrado')
+            else:
+                bookcase.pop(book_to_delete - 1)
+        except ValueError:
+            print('Indice ínvalido')
+    else:
+        print('Não há livros para serem removidos')
+    return bookcase
 
 
+                        
 
-bookcase = load_bookcase(FILE_JSON_PATH, Books)
+        
+#-------------------------------------------------------------------------------------------------------
+
+bookcase = load_bookcase(FILE_JSON_PATH, Books) # Retorna lista de objetos
 
 while True:
     
@@ -83,7 +100,8 @@ while True:
         'cadastrar': lambda: bookcase.append(add_book()), #retorna um objeto e salva na lista
         'salvar': lambda: save_books(bookcase), #recebe uma lista de objetos e adiciona no json
         'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books), #retorna lista de objetos
-        'exibir': lambda: show_saved_books(bookcase) #imprime os livros cadastrados
+        'exibir': lambda: show_saved_books(bookcase), #imprime os livros cadastrados
+        'deletar': lambda: del_book(bookcase) #retorna um lista de objetos
     }
 
     result = commands.get(menu_choice)()
@@ -93,22 +111,15 @@ while True:
         bookcase = result
 
 
-    # book_1 = add_book()
-    # bookcase.append(book_1)
-    # save_books(bookcase)
-
-
-
-    # bookcase = load_bookcase(FILE_JSON_PATH, Books)
-
-
-    # for book in bookcase:
-    #     print(book.name)
-    
+   
 
 
 
 
 
 
-
+#---------------------------------- MELHORIAS--------------------------------------------------------------
+# tratar comando invalidos(numeros, numeros negativos, comando não encontrado, espaços vazios)
+# melhorar a exibição do menu
+# limpar a tela
+# exibir mensagem confirmando carregar e avisando que dados não salvos serão perdidos
