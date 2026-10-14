@@ -45,16 +45,38 @@ def obj_to_dict(bookcase):
 
 def add_book():
     create_a_book = {
-        'name': 'name',
-        'writer': 'writer',
-        'publisher': 'publisher',
-        'pages': 'pages'
+        'name': None,
+        'writer': None,
+        'publisher': None,
+        'pages': None
     }
-    create_a_book['name'] = input('Nome do livro:')
-    create_a_book['writer'] = input('Autor(a):')
-    create_a_book['publisher'] = input('Editora:')
-    create_a_book['pages'] = int(input('Número de páginas:'))
+    
+    while not create_a_book['name']:
+        create_a_book['name'] = input('Nome do livro:').strip()
+        if not create_a_book['name']:
+            print('O nome do livro não pode ficar vazio')
 
+    while not create_a_book['writer']:
+        create_a_book['writer'] = input('Autor(a):').strip()
+        if not create_a_book['writer']:
+            print('O nome do autor(a) não pode ficar vazio')
+
+    while not create_a_book['publisher']:
+        create_a_book['publisher'] = input('Editora:').strip()
+        if not create_a_book['publisher']:
+            print('O nome da editora não pode ficar vazio')
+    
+    while True:
+        try:
+            create_a_book['pages'] = int(input('Número de páginas:'))
+            if create_a_book['pages'] <= 0:
+                print('Digite um número de páginas válido')
+                continue
+            break
+        except ValueError:
+            print('Digite um número de páginas válido')
+        
+    
     book_created = Books(**create_a_book)
     return book_created #retorna um objeto de livro
 
@@ -91,24 +113,32 @@ def del_book(bookcase):
 
 bookcase = load_bookcase(FILE_JSON_PATH, Books) # Retorna lista de objetos
 
+commands = {
+    'cadastrar': lambda: bookcase.append(add_book()), #retorna um objeto e salva na lista
+    'salvar': lambda: save_books(bookcase), #recebe uma lista de objetos e adiciona no json
+    'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books), #retorna lista de objetos
+    'exibir': lambda: show_saved_books(bookcase), #imprime os livros cadastrados
+    'deletar': lambda: del_book(bookcase) #retorna um lista de objetos
+}
+
 while True:
     
 
     menu_choice = input('Digite uma ação:')
 
-    commands = {
-        'cadastrar': lambda: bookcase.append(add_book()), #retorna um objeto e salva na lista
-        'salvar': lambda: save_books(bookcase), #recebe uma lista de objetos e adiciona no json
-        'carregar': lambda: load_bookcase(FILE_JSON_PATH, Books), #retorna lista de objetos
-        'exibir': lambda: show_saved_books(bookcase), #imprime os livros cadastrados
-        'deletar': lambda: del_book(bookcase) #retorna um lista de objetos
-    }
+    
+    if menu_choice not in commands:
+        print('Comando inválido')
+        continue
 
-    result = commands.get(menu_choice)()
+    result = commands[menu_choice]()
 
+    
 
     if result is not None:
         bookcase = result
+    
+    
 
 
    
@@ -119,7 +149,7 @@ while True:
 
 
 #---------------------------------- MELHORIAS--------------------------------------------------------------
-# tratar comando invalidos(numeros, numeros negativos, comando não encontrado, espaços vazios)
+# tratar comando invalidos(numeros, numeros negativos, comando não encontrado, espaços vazios) OK
 # melhorar a exibição do menu
 # limpar a tela
 # exibir mensagem confirmando carregar e avisando que dados não salvos serão perdidos
